@@ -14,6 +14,7 @@ function addBookToLibrary(book) {
     myLibrary.push(book);
 }
 
+
 const book1 = new Book("EJK", "The turtle", 50, "read", crypto.randomUUID())
 const book2 = new Book("Human Rights", "The Who?", 25, "not read", crypto.randomUUID())
 const book3 = new Book("KOLATERAL", "BLKD et al.", 12, "read", crypto.randomUUID())
@@ -31,12 +32,52 @@ function displayBooks(book){
     const newDiv = document.createElement("div");
     newDiv.classList.add("book");
     container.appendChild(newDiv);
+    const removeButton = document.createElement("button");
+    removeButton.textContent = "×"
     for (let x in book){
         const newP = document.createElement("p");
         newDiv.appendChild(newP);
         newP.textContent +=`${x}: ${book[x]}`;
     }
+    newDiv.appendChild(removeButton)
 
 }
 const container = document.querySelector(".container");
 myLibrary.forEach(displayBooks);
+
+
+const addNewBook = document.querySelector("#addBook");
+const addDialog = document.querySelector("#dialog");
+const submitButton = document.querySelector("#submit");
+const closeButton = document.querySelector("#close")
+
+addNewBook.addEventListener("click", ()=>{
+  addDialog.showModal();
+})
+
+closeButton.addEventListener("click", ()=> {
+  addDialog.close()
+})
+
+submitButton.addEventListener("click", ()=>{
+  const allBook = document.querySelectorAll(".book");
+  const newTitle = document.querySelector("#title");
+  const newAuthor = document.querySelector("#author");
+  const newPages = document.querySelector("#pages");
+  const newStatus = document.querySelector("#status");
+  const addBook= new Book(newTitle.value, newAuthor.value, newPages.value, newStatus.value, crypto.randomUUID())
+  if(!newTitle.value||!newAuthor.value||!newPages.value||!newStatus.value){
+    alert("input values to all text fields")
+  }
+  else{
+    allBook.forEach(book => { book.remove()})
+    addBookToLibrary(addBook);
+    myLibrary.forEach(displayBooks);
+  }
+  newTitle.value = "";
+  newAuthor.value = "";
+  newPages.value = "";
+  newStatus.value = "";
+  addDialog.close();
+})
+

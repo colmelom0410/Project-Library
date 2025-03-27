@@ -45,24 +45,56 @@ body{
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: calc(100vh - 20px);
+}
+dialog{
+  transform: translateX(-50%);
+  left: 50%;
+  top: 25%;
+}
+.inputContainer{
+  display: flex;
+  flex-direction: column  ;
+}
+.inputButtons{
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 5px;
+}
+.book > button{
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: red;
+  background-color: transparent;
+  border: none;
+}
+.book >button:hover{
+  font-weight: bold;
+  font-size: 1.1em;
+}
+.book >button:active{
+  color: black;
 }
 .container{
     /* border: 1px solid red; */
     width: 50%;
-    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     grid-auto-rows:1fr;
     gap: 0.5em;
     padding: 0.5em;
-    background-color: #563232;
+    background-color: #d1b58a;
+    margin: 1em;
 }
 .book{
     /* border: 1px solid purple; */
     display: flex;
     flex-direction: column;
-    background-color: #e7cfb4;
+    background-color: #eedecd;
+    position: relative;
 }
 
 .book >p {
