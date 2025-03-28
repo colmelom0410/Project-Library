@@ -33,15 +33,30 @@ function displayBooks(book){
     newDiv.classList.add("book");
     container.appendChild(newDiv);
     const removeButton = document.createElement("button");
+    removeButton.classList.add("rmvBtn");
     removeButton.textContent = "×"
+    newDiv.setAttribute('data-id', book.id);
+
+    removeButton.addEventListener("click", () => {
+      removeBookFromLibrary(book.id);
+      newDiv.remove(); // Remove the book from the DOM
+    });
+
     for (let x in book){
         const newP = document.createElement("p");
         newDiv.appendChild(newP);
         newP.textContent +=`${x}: ${book[x]}`;
     }
     newDiv.appendChild(removeButton)
-
+    
 }
+function removeBookFromLibrary(bookId) {
+  const bookIndex = myLibrary.findIndex(book => book.id === bookId);
+  if (bookIndex !== -1) {
+    myLibrary.splice(bookIndex, 1); // Remove the book from the library array
+  }
+}
+
 const container = document.querySelector(".container");
 myLibrary.forEach(displayBooks);
 
