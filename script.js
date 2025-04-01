@@ -46,9 +46,11 @@ function displayBooks(book){
 
     //display each object elements as <p> and append to the div container
     for (let x in book){
+      if(book.hasOwnProperty(x)){
       const newP = document.createElement("p");
       newDiv.appendChild(newP);
       newP.textContent +=`${x}: ${book[x]}`;
+      } 
     }   
 
     //create remove button
