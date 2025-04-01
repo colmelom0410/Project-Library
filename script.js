@@ -8,6 +8,15 @@ function Book(title, author, pages, stats, id) {
     this.stats = stats;
     this.id = id;
 }
+//create book prototype to change read status
+Book.prototype.readStatus = function(){
+  if(this.stats == "read"){
+    this.stats = "not read"
+  }
+  else{
+    this.stats = "read"
+  }
+}
 
 function addBookToLibrary(book) {
   // take params, create a book then store it in the array
@@ -28,28 +37,54 @@ addBookToLibrary(book4);
 addBookToLibrary(book5);
 addBookToLibrary(book6);
 
+//Functions to display books in the DOM
 function displayBooks(book){
+    //create new Div as the container for each book
     const newDiv = document.createElement("div");
     newDiv.classList.add("book");
     container.appendChild(newDiv);
+
+    //display each object elements as <p> and append to the div container
+    for (let x in book){
+      const newP = document.createElement("p");
+      newDiv.appendChild(newP);
+      newP.textContent +=`${x}: ${book[x]}`;
+    }   
+
+    //create remove button
     const removeButton = document.createElement("button");
     removeButton.classList.add("rmvBtn");
     removeButton.textContent = "×"
-    newDiv.setAttribute('data-id', book.id);
-
     removeButton.addEventListener("click", () => {
       removeBookFromLibrary(book.id);
       newDiv.remove(); // Remove the book from the DOM
     });
+    newDiv.appendChild(removeButton);
 
-    for (let x in book){
-        const newP = document.createElement("p");
-        newDiv.appendChild(newP);
-        newP.textContent +=`${x}: ${book[x]}`;
-    }
-    newDiv.appendChild(removeButton)
-    
+    //create read status button
+    const statsBtn = document.createElement("button");
+    statsBtn.classList.add("statsBtn");
+    statsBtn.textContent = book.stats;
+    statsBtn.addEventListener("click", () => {
+      book.readStatus();
+      statsBtn.textContent = book.stats;
+      statsColor(statsBtn);
+    })
+    statsColor(statsBtn);
+    newDiv.appendChild(statsBtn);
+ 
 }
+//change read status color
+function statsColor(stats){
+  if(stats.textContent == "read"){
+    stats.style.color = "green";
+  }
+  else{
+    stats.style.color = "red"
+  }
+}
+
+//function to delete books from the library
 function removeBookFromLibrary(bookId) {
   const bookIndex = myLibrary.findIndex(book => book.id === bookId);
   if (bookIndex !== -1) {
@@ -60,7 +95,7 @@ function removeBookFromLibrary(bookId) {
 const container = document.querySelector(".container");
 myLibrary.forEach(displayBooks);
 
-
+//Add new book dialog/forms
 const addNewBook = document.querySelector("#addBook");
 const addDialog = document.querySelector("#dialog");
 const submitButton = document.querySelector("#submit");
@@ -74,6 +109,8 @@ closeButton.addEventListener("click", ()=> {
   addDialog.close()
 })
 
+
+// Add new books base on the user input details
 submitButton.addEventListener("click", ()=>{
   const allBook = document.querySelectorAll(".book");
   const newTitle = document.querySelector("#title");
@@ -92,7 +129,6 @@ submitButton.addEventListener("click", ()=>{
   newTitle.value = "";
   newAuthor.value = "";
   newPages.value = "";
-  newStatus.value = "";
   addDialog.close();
 })
 

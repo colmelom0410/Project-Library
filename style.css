@@ -63,7 +63,7 @@ dialog{
   gap: 5px;
   margin-top: 5px;
 }
-.book > button{
+.book > .rmvBtn{
   position: absolute;
   top: 0;
   right: 0;
@@ -71,6 +71,15 @@ dialog{
   background-color: transparent;
   border: none;
 }
+
+.book > .statsBtn{
+  position: absolute;
+  top: 0;
+  right: 10%;
+  background-color: transparent;
+  border: none;
+}
+
 .book >button:hover{
   font-weight: bold;
   font-size: 1.1em;
