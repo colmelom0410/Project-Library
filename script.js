@@ -24,39 +24,35 @@ function addBookToLibrary(book) {
 }
 
 
-const book1 = new Book("EJK", "The turtle", 50, "read", crypto.randomUUID())
-const book2 = new Book("Human Rights", "The Who?", 25, "not read", crypto.randomUUID())
-const book3 = new Book("KOLATERAL", "BLKD et al.", 12, "read", crypto.randomUUID())
-const book4 = new Book("Gatilyo", "BLKD", 25, "read", crypto.randomUUID())
-const book5 = new Book("Bistay", "Emar industriya", 4, "read", crypto.randomUUID())
-const book6 = new Book("Alamat ng Gubat", "Bob ong", 93, "read", crypto.randomUUID())
+const book1 = new Book("KOLATERAL", "BLKD et al.", 12, "read", crypto.randomUUID())
 addBookToLibrary(book1);
-addBookToLibrary(book2);
-addBookToLibrary(book3);
-addBookToLibrary(book4);
-addBookToLibrary(book5);
-addBookToLibrary(book6);
+
 
 //Functions to display books in the DOM
 function displayBooks(book){
     //create new Div as the container for each book
     const newDiv = document.createElement("div");
     newDiv.classList.add("book");
-    container.appendChild(newDiv);
-
+    container.insertBefore(newDiv, container.children[container.children.length - 1]);
+    //create img container
+    const imgDiv = document.createElement("div");
+    imgDiv.classList.add("bookCover");
+    newDiv.appendChild(imgDiv);
+    imgDiv.textContent = "Book Cover";
     //display each object elements as <p> and append to the div container
     for (let x in book){
-      if(book.hasOwnProperty(x)){
+      if(book.hasOwnProperty(x) && x!="cover" && x!="id" && x!="stats"){
       const newP = document.createElement("p");
+      newP.classList.add(x);
       newDiv.appendChild(newP);
-      newP.textContent +=`${x}: ${book[x]}`;
+      newP.textContent +=`${book[x]}`;
       } 
     }   
 
     //create remove button
     const removeButton = document.createElement("button");
     removeButton.classList.add("rmvBtn");
-    removeButton.textContent = "×"
+    removeButton.textContent = "Delete"
     removeButton.addEventListener("click", () => {
       removeBookFromLibrary(book.id);
       newDiv.remove(); // Remove the book from the DOM
@@ -79,10 +75,10 @@ function displayBooks(book){
 //change read status color
 function statsColor(stats){
   if(stats.textContent == "read"){
-    stats.style.color = "green";
+    stats.style.backgroundColor = "green";
   }
   else{
-    stats.style.color = "red"
+    stats.style.backgroundColor = "rgb(145, 15, 15)"
   }
 }
 
