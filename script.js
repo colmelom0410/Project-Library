@@ -1,20 +1,16 @@
 const myLibrary = [];
 
-function Book(title, author, pages, stats, id) {
-  // the constructor...
+class Book{
+  constructor(title, author, pages, stats, id){
     this.title = title;
     this.author = author;
     this.pages = pages;
     this.stats = stats;
     this.id = id;
-}
-//create book prototype to change read status
-Book.prototype.readStatus = function(){
-  if(this.stats == "read"){
-    this.stats = "not read"
   }
-  else{
-    this.stats = "read"
+
+  readStatus(){
+    this.stats = this.stats === "read" ? "not read" : "read";
   }
 }
 
